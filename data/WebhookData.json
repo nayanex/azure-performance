@@ -1,0 +1,57 @@
+{
+    "WebhookName": "Alert1630870132508",
+    "RequestBody": {
+        "schemaId": "azureMonitorCommonAlertSchema",
+        "data": {
+            "essentials": {
+                "alertId": "/subscriptions/bb272072-9c6d-4e28-b814-947814c3e6ef/providers/Microsoft.AlertsManagement/alerts/c0ab1446-ded1-40ce-b64c-f4ccbc0d2f97",
+                "alertRule": "stop-vmss-due-to-cpu",
+                "severity": "Sev3",
+                "signalType": "Metric",
+                "monitorCondition": "Resolved",
+                "monitoringService": "Platform",
+                "alertTargetIDs": [
+                    "/subscriptions/bb272072-9c6d-4e28-b814-947814c3e6ef/resourcegroups/acdnd-c4-project/providers/microsoft.compute/virtualmachinescalesets/udacity-vmss"
+                ],
+                "configurationItems": [
+                    "udacity-vmss"
+                ],
+                "originAlertId": "bb272072-9c6d-4e28-b814-947814c3e6ef_acdnd-c4-project_microsoft.insights_metricAlerts_stop-vmss-due-to-cpu_-618119872",
+                "firedDateTime": "2021-09-05T20:21:11.8630285Z",
+                "resolvedDateTime": "2021-09-05T20:24:05.3368289Z",
+                "description": "",
+                "essentialsVersion": "1.0",
+                "alertContextVersion": "1.0"
+            },
+            "alertContext": {
+                "properties": null,
+                "conditionType": "SingleResourceMultipleMetricCriteria",
+                "condition": {
+                    "windowSize": "PT1M",
+                    "allOf": [
+                        {
+                            "metricName": "Percentage CPU",
+                            "metricNamespace": "Microsoft.Compute/virtualMachineScaleSets",
+                            "operator": "GreaterThan",
+                            "threshold": "40",
+                            "timeAggregation": "Average",
+                            "dimensions": [],
+                            "metricValue": 2.9,
+                            "webTestName": null
+                        }
+                    ],
+                    "windowStartTime": "2021-09-05T20:20:00.313Z",
+                    "windowEndTime": "2021-09-05T20:21:00.313Z"
+                }
+            }
+        }
+    },
+    "RequestHeader": {
+        "Connection": "Keep-Alive",
+        "Expect": "100-continue",
+        "Host": "65aaffea-bcb2-4613-8d9a-71c8b1b62af5.webhook.we.azure-automation.net",
+        "User-Agent": "IcMBroadcaster/1.0",
+        "X-CorrelationContext": "RkkKACgAAAACAAAAEABnOVbKTMqYSKo8ycO2VxIaAQAQAI82lkJmn2hMvw69YMcCisc=",
+        "x-ms-request-id": "c2282d13-301f-477b-94f4-0e9b870aad58"
+    }
+}

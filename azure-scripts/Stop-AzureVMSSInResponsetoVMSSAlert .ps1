@@ -13,7 +13,7 @@ if ($WebhookData)
 
     # Get the info needed to identify the VMSS (depends on the payload schema)
     $schemaId = $WebhookBody.schemaId
-    Write-Output "schemaId: $schemaId"
+    Write-Output "schemaId: $schemaId" 
     if ($schemaId -eq "azureMonitorCommonAlertSchema") {
         # This is the common Metric Alert schema (released March 2019)
         $Essentials = [object] ($WebhookBody.data).essentials
@@ -57,37 +57,39 @@ if ($WebhookData)
         Write-Error "The alert data schema - $schemaId - is not supported."
     }
 
-    Write-Output "status: $status"
+    Write-Output "status: $status" 
     if (($status -eq "Activated") -or ($status -eq "Fired"))
     {
-        Write-Output "resourceType: $ResourceType"
-        Write-Output "resourceName: $ResourceName"
-        Write-Output "resourceGroupName: $ResourceGroupName"
-        Write-Output "subscriptionId: $SubId"
+        Write-Output "resourceType: $ResourceType" 
+        Write-Output "resourceName: $ResourceName" 
+        Write-Output "resourceGroupName: $ResourceGroupName" 
+        Write-Output "subscriptionId: $SubId" 
 
         # Determine code path depending on the resourceType
         if ($ResourceType -eq "Microsoft.Compute/virtualMachineScaleSets")
         {
-            # This is an Resource Manager VM
-            Write-Output "This is an Resource Manager VMSS."
+            # This is an Resource Manager VMSS
+            Write-Output "This is an Resource Manager VMSS." 
 
             # Authenticate to Azure with service principal and certificate and set subscription
-            Write-Output "Authenticating to Azure with service principal and certificate"
+            Write-Output "Authenticating to Azure with service principal and certificate" 
             $ConnectionAssetName = "AzureRunAsConnection"
-            Write-Output "Get connection asset: $ConnectionAssetName"
+            Write-Output "Get connection asset: $ConnectionAssetName" 
+
             $Conn = Get-AutomationConnection -Name $ConnectionAssetName
             if ($Conn -eq $null)
             {
                 throw "Could not retrieve connection asset: $ConnectionAssetName. Check that this asset exists in the Automation account."
             }
-            Write-Output "Authenticating to Azure with service principal."
-            Connect-AzAccount -ServicePrincipal -Tenant $Conn.TenantID -ApplicationId $Conn.ApplicationID -CertificateThumbprint $Conn.CertificateThumbprint | Write-Output
-            Write-Output "Setting subscription to work against: $SubId"
-            Set-AzContext -SubscriptionId $SubId -ErrorAction Stop | Write-Verbose
+            Write-Output "Authenticating to Azure with service principal." 
+            Add-AzAccount -ServicePrincipal -Tenant $Conn.TenantID -ApplicationId $Conn.ApplicationID -CertificateThumbprint $Conn.CertificateThumbprint 
+            
+            Write-Output "Setting subscription to work against: $SubId" 
+            Set-AzContext -SubscriptionId $SubId -ErrorAction Stop 
 
             # Stop the Resource Manager VMSS
-            Write-Output "Stopping the VMSS - $ResourceName - in resource group - $ResourceGroupName -"
-            Stop-AzVmss -Name $ResourceName -ResourceGroupName $ResourceGroupName -Force
+            Write-Output "Stopping the VMSS - $ResourceName - in resource group - $ResourceGroupName -" 
+            Stop-AzVMSS -Name $ResourceName -ResourceGroupName $ResourceGroupName -Force
             # [OutputType(PSAzureOperationResponse")]
         }
         else {
@@ -97,7 +99,7 @@ if ($WebhookData)
     }
     else {
         # The alert status was not 'Activated' or 'Fired' so no action taken
-        Write-Verbose ("No action taken. Alert status: " + $status) -Verbose
+        Write-Output ("No action taken. Alert status: " + $status) 
     }
 }
 else {
