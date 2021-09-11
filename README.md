@@ -394,3 +394,273 @@ The script above will take a few minutes to create VMSS and related resources. O
 
 * [License](./LICENSE.md)
       THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+## Steps I took
+
+```
+sudo apt update
+sudo apt install python3.7
+python3 --version
+sudo apt install python3-pip --upgrade python3-pip
+```
+
+
+https://www.sudo.ws/man/1.8.13/sudo.man.html
+
+`-H, --set-home`
+
+Request that the security policy set the HOME environment variable to the home directory specified by the target user's password database entry. Depending on the policy, this may be the default behavior.
+
+
+### How do I see what packages are installed on Ubuntu Linux?
+
+`apt list --installed`
+
+### Uninstall Redis
+
+1. Stop redis with:
+```
+sudo systemctl stop redis
+sudo systemctl disable redis
+```
+
+2. Change into install location as per the tutorial link:
+
+```
+cd redis-stable
+sudo make uninstall
+````
+
+3. Get rid of the folders created:
+
+```
+sudo rm /etc/redis/redis.conf
+sudo rm -rf /var/lib/redis
+```
+
+4. Remove redis user:
+
+`sudo deluser redis`
+
+## Install Redis
+
+## From the official Ubuntu PPA
+You can install the latest stable version of Redis from the redislabs/redis package repository. Add the repository to the apt index, update it and install:
+$ sudo add-apt-repository ppa:redislabs/redis
+$ sudo apt-get update
+$ sudo apt-get install redis
+
+redis-cli ping # should return “”PONG
+
+## redis-server in ubuntu14.04: Bind address already in use
+
+sudo service redis-server stop
+
+ps aux | grep redis
+
+`export PYTHONPATH=$PYTHONPATH:/home/dev/python-files`
+
+
+```
+sudo apt-get install python3-venv
+python3 -m venv vote-app-env
+source vote-app-env/bin/activate
+pip install -r requirements.txt
+```
+
+————————————————————————————————————————————————————————————————————————————
+```
+(vote-app-env) udacityadmin@udaci540d000000:~/azure-voting-app-redis$ sudo lsof -i -P -n | grep LISTEN
+sshd       1197            root    3u  IPv4  21455      0t0  TCP *:22 (LISTEN)
+sshd       1197            root    4u  IPv6  21472      0t0  TCP *:22 (LISTEN)
+redis-ser  1702    udacityadmin    8u  IPv4 233929      0t0  TCP *:6379 (LISTEN)
+redis-ser  1702    udacityadmin    9u  IPv6 233930      0t0  TCP *:6379 (LISTEN)
+systemd-r  2343 systemd-resolve   13u  IPv4  27367      0t0  TCP 127.0.0.53:53 (LISTEN)
+nginx     17086            root    6u  IPv4  43192      0t0  TCP *:80 (LISTEN)
+nginx     17089        www-data    6u  IPv4  43192      0t0  TCP *:80 (LISTEN)
+nodejs    17116            root   10u  IPv6  43452      0t0  TCP *:3000 (LISTEN)
+
+```
+`sudo kill -9 17116`
+
+————————————————————————————————————————————————————————————————————————————
+
+`find . -name '.DS_Store' -type f -delete`
+
+## Deleting Kubernetes contexts
+
+```
+azure-voting-app-redis-aks (main) ✗ kubectl config get-contexts
+CURRENT   NAME                         CLUSTER                      AUTHINFO                                                         NAMESPACE
+          azur3function5dem0registry   azur3function5dem0registry   clusterUser_udacity-azure-functions_azur3function5dem0registry   
+          my-aks-cluster               my-aks-cluster               clusterUser_udacity-azure-functions_my-aks-cluster               
+          myAKScluster                 myAKScluster                 clusterUser_udacity-azure-functions_myAKScluster                 
+          mycourse2cluster             mycourse2cluster             clusterUser_udacity-azure-functions_mycourse2cluster             
+          neighborly-aks-cluster       neighborly-aks-cluster       clusterUser_neighborly-app-rg_neighborly-aks-cluster             
+          neighbourly-jammers-aks      neighbourly-jammers-aks      clusterUser_neighborly-app-rg_neighbourly-jammers-aks            
+*         udacity-cluster              udacity-cluster              clusterUser_acdnd-c4-exercise_udacity-cluster                    
+➜ azure-voting-app-redis-aks (main) ✗ kubectl config delete-context azur3function5dem0registry  
+deleted context azur3function5dem0registry from /Users/nayanex/.kube/config
+➜ azure-voting-app-redis-aks (main) ✗ kubectl config delete-context my-aks-cluster            
+deleted context my-aks-cluster from /Users/nayanex/.kube/config
+```
+
+https://docs.microsoft.com/en-us/azure/azure-monitor/containers/container-insights-troubleshoot
+kubectl get ds omsagent --namespace=kube-system
+
+
+`pip install opencensus-ext-requests`
+
+
+`traces | project message | take 100`
+
+https://docs.microsoft.com/en-gb/azure/data-explorer/kusto/query/sqlcheatsheet?WT.mc_id=udacity_learn-wwl
+
+
+—————————————
+
+resourceGroup="acdnd-c4-project"
+location="westeurope"
+vmssName="udacity-vmss"
+
+
+
+az vmss list-instance-connection-info \
+--resource-group $resourceGroup \
+--name $vmssName
+
+
+ssh udacityadmin@51.144.127.218 -p 50000
+
+
+https://docs.microsoft.com/en-us/azure/automation/automation-create-alert-triggered-runbook
+
+https://docs.microsoft.com/en-us/azure/virtual-machine-scale-sets/tutorial-autoscale-cli
+
+Define an autoscale profile
+
+myResourceGroup="acdnd-c4-project"
+vmssName="udacity-vmss"
+
+az monitor autoscale create \
+  --resource-group $myResourceGroup \
+  --resource $vmssName \
+  --resource-type Microsoft.Compute/virtualMachineScaleSets \
+  --name autoscale \
+  --min-count 2 \
+  --max-count 10 \
+  --count 2
+
+az monitor autoscale-settings delete
+
+az monitor autoscale-settings delete [--ids]
+                                     [--name]
+                                     [--resource-group]
+                                     [--subscription]
+
+
+
+az monitor autoscale list --resource-group $myResourceGroup 
+
+
+Create a rule to autoscale out
+
+az monitor autoscale rule create \
+  --resource-group $myResourceGroup \
+  --autoscale-name autoscale \
+  --condition "Percentage CPU > 40 avg 3m" \
+  --scale out 3
+
+Create a rule to autoscale in
+
+az monitor autoscale rule create \
+  --resource-group $myResourceGroup \
+  --autoscale-name autoscale \
+  --condition "Percentage CPU < 20 avg 3m" \
+  --scale in 1
+
+
+Generate CPU load on scale set - Configuring an App Service to Auto Scale based on CPU load
+
+
+az vmss list-instance-connection-info \
+  --resource-group $myResourceGroup \
+  --name $vmssName
+
+
+20.101.128.169:50002
+
+
+ssh udacityadmin@20.86.191.28 -p 50002
+ssh udacityadmin@20.86.191.28 -p 50003
+
+ssh udacityadmin@40.113.102.195 -p 50002
+
+40.113.102.195:50002
+
+
+Once logged in, install the stress utility. Start 10 stress workers that generate CPU load. These workers run for 420 seconds, which is enough to cause the autoscale rules to implement the desired action.
+
+sudo apt-get update
+sudo apt-get -y install stress
+
+
+
+sudo stress --cpu 10 --timeout 420 &
+
+
+
+
+
+To confirm that stress generates CPU load, examine the active system load with the top utility:
+Console
+
+`top`
+
+
+Exit top, then close your connection to the VM instance. stress continues to run on the VM instance.
+
+```
+Ctrl-c
+exit
+```
+
+Monitor the active autoscale rules
+
+https://docs.microsoft.com/en-us/cli/azure/vmss?view=azure-cli-latest
+
+az vmss list-instances \
+  --resource-group $myResourceGroup \
+  --name $vmssName \
+  --output table
+
+
+Clean up resources
+
+az group delete --name myResourceGroup --yes --no-wait
+
+
+
+https://docs.microsoft.com/en-us/azure/azure-monitor/alerts/alerts-metric-near-real-time
+https://docs.microsoft.com/en-us/azure/azure-monitor/alerts/action-groups
+https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_output_streams?view=powershell-7.1
+https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/write-output?view=powershell-7.1
+https://docs.microsoft.com/en-us/azure/automation/automation-alert-metric
+https://docs.microsoft.com/en-us/python/api/azure-mgmt-compute/https://docs.microsoft.com/en-us/python/api/azure-mgmt-compute/azure.mgmt.compute.v2021_04_01.operations.virtualmachinescalesetsoperations?view=azure-python
+https://github.com/azureautomation/runbooks/blob/master/Utility/Python/stop_azure_vm.py
+https://www.azurepatterns.com/2021/03/18/autoshutdown
+
+
+Kubectl delete pod <podname>
+
+
+
+
+
+
+
+
+
+
+
+
