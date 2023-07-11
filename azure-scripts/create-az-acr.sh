@@ -1,6 +1,6 @@
 resourceGroup="acdnd-c4-project"
 region="westeurope"
-myAcrName="myacr202106"
+myAcrName="myacr20210601"
 clusterName="udacity-cluster"
 
 az acr create --resource-group $resourceGroup --name $myAcrName --sku Basic
@@ -12,11 +12,11 @@ az acr login --name $myAcrName
 # Find the login server address of your registry
 az acr show --name $myAcrName --query loginServer --output table
 # Associate a tag to the local image
-docker tag azure-vote-front:v1 myacr202106.azurecr.io/azure-vote-front:v1
-# Now you will see myacr202106.azurecr.io/azure-vote-front:v1 if you run docker images
+docker tag azure-vote-front:v1 myacr20210601.azurecr.io/azure-vote-front:v1
+# Now you will see myacr20210601.azurecr.io/azure-vote-front:v1 if you run docker images
 # Push the local registry to remote
-docker push myacr202106.azurecr.io/azure-vote-front:v1
+docker push myacr20210601.azurecr.io/azure-vote-front:v1
 # Verify if you image is up in the cloud.
-az acr repository list --name myacr202106.azurecr.io --output table
+az acr repository list --name myacr20210601.azurecr.io --output table
 # Associate the AKS cluster with the ACR
 # az aks update -n $clusterName -g $resourceGroup --attach-acr $myAcrName

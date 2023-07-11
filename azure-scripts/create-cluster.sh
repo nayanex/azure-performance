@@ -4,7 +4,7 @@
 resourceGroup="acdnd-c4-project"
 clusterName="udacity-cluster"
 region="westeurope"
-myAcrName="myacr202106"
+myAcrName="myacr20210601"
 
 # Install aks cli
 echo "Installing AKS CLI"
@@ -56,7 +56,7 @@ echo "Verifying connection to $clusterName"
 kubectl get nodes
 
 echo "Deploying to AKS cluster"
-The command below will deploy a standard application to your AKS cluster.
+#The command below will deploy a standard application to your AKS cluster.
 kubectl apply -f ../azure-vote-all-in-one-redis.yaml
 # Test the application at the External IP
 # It will take a few minutes to come alive.
@@ -78,4 +78,4 @@ kubectl apply -f ../azure-vote-all-in-one-redis.yaml
 #kubectl run -it --rm load-generator --image=busybox /bin/sh
 #You will see a new command prompt. Enter the following in the new command prompt. It will send an infinite loop of queries to the cluster and increase the load on the cluster.
 
-#while true; do wget -q -O- 20.93.199.149; done
+#while true; do wget -q -O- 20.76.190.109; done
