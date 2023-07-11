@@ -78,4 +78,4 @@ kubectl apply -f ../azure-vote-all-in-one-redis.yaml
 #kubectl run -it --rm load-generator --image=busybox /bin/sh
 #You will see a new command prompt. Enter the following in the new command prompt. It will send an infinite loop of queries to the cluster and increase the load on the cluster.
 
-#while true; do wget -q -O- 20.93.199.149; done
+#while true; do wget -q -O- 20.76.190.109; done
